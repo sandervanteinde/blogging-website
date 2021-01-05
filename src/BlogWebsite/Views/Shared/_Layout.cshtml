@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@await RenderSectionAsync("Title") - Sander's Blog </title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    @await RenderSectionAsync("Styles", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
+</head>
+<body>
+    <nav>
+        <container class="container--navigation">
+            <img src="https://picsum.photos/80/50" />
+            <ul>
+                <li>Home</li>
+                <li>About me</li>
+                <li>Contact me</li>
+            </ul>
+        </container>
+    </nav>
+    <main>
+        @RenderBody()
+    </main>
+</body>
+</html>
