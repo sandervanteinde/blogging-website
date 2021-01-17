@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoginService } from './admin/login.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'blog-website';
+
+  readonly isAdmin$ = this._loginService.isLoggedIn$;
+  
+  constructor(private readonly _loginService: LoginService) { }
 }

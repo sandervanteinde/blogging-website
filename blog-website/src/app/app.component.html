@@ -9,8 +9,19 @@
               [routerLink]="['/']"
               class="nav-container__link"
               routerLinkActive="nav-container__link--active"
-              >Home</a
+              [routerLinkActiveOptions]="{exact: true}"
             >
+              Home
+            </a>
+          </li>
+          <li *ngIf="isAdmin$ | async">
+            <a
+              [routerLink]="['/admin']"
+              class="nav-container__link"
+              routerLinkActive="nav-container__link--active"
+            >
+              Admin panel
+            </a>
           </li>
         </ul>
       </div>
@@ -18,12 +29,18 @@
         <ul>
           <li>
             <a href="https://twitter.com/sandervanteinde" target="_blank">
-              <img src="/assets/3rd-party-logos/twitter.svg" style="height: 30px;" />
+              <img
+                src="/assets/3rd-party-logos/twitter.svg"
+                style="height: 30px"
+              />
             </a>
           </li>
           <li>
             <a href="https://github.com/sandervanteinde" target="_blank">
-              <img src="/assets/3rd-party-logos/github.png" style="height: 24px; top: 3px;" />
+              <img
+                src="/assets/3rd-party-logos/github.png"
+                style="height: 24px; top: 3px"
+              />
             </a>
           </li>
         </ul>

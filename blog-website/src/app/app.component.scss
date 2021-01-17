@@ -21,8 +21,8 @@ nav {
     text-decoration: none;
   }
 
-  &__link:not(.nav-container__link--active) {
-    text-decoration: underline;
+  &__link--active {
+    font-weight: bold;
   }
   
 
