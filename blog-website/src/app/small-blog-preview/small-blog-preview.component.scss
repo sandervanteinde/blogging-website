@@ -1,0 +1,13 @@
+:host {
+  overflow: hidden;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+
+  img {
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+}

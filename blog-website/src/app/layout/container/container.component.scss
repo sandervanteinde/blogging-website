@@ -1,0 +1,9 @@
+.container {
+  margin: 0 auto;
+  max-width: 920px;
+  width: 100%;
+  padding: 10px;
+  @media only screen and (max-width: 968px) {
+    padding: 10px 2px;
+  }
+}

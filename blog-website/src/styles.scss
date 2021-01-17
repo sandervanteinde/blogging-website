@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+}
+
+* {
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+}
+:root {
+  --primary-color: rgb(14, 122, 231);
+  --primary-color-lighten: rgb(62, 150, 238);
+
+  --image-border-radius: 10px;
+}
+
+img {
+  border-radius: var(--image-border-radius);
+}
