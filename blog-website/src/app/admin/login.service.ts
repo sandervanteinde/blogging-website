@@ -1,30 +1,40 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, ReplaySubject } from 'rxjs';
+import { catchError, map, startWith, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class LoginService {
   private returnRouted?: ActivatedRouteSnapshot;
+  readonly token$ = new BehaviorSubject<string | undefined>(undefined);
+  readonly isLoggedIn$ = this.token$.pipe(map(Boolean));
+  get isLoggedIn(): boolean { return Boolean(this.token$.value); }
 
-  readonly isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  get isLoggedIn(): boolean { return this.isLoggedIn$.value; }
-
-  constructor(private readonly _router: Router) {
-    
-  }
+  constructor(
+    private readonly _router: Router,
+    private readonly _httpClient: HttpClient
+  ) { }
 
   setReturnRoute(activatedRoute: ActivatedRouteSnapshot): void {
     this.returnRouted = activatedRoute;
   }
 
   doLogin(password: string): Observable<boolean> {
-    if(password === 'hallo') {
-      this.isLoggedIn$.next(true);
-      const pathCommands = this.constructPathCommands();
-      this._router.navigate(pathCommands);
-      return of(true);
-    }
-    return of(false);
+    return new Observable(observer => {
+      const subscription = this._httpClient.post<{token: string}>(`${environment.apiUrl}/login`, { password }).subscribe({
+        next: response => {
+          this.token$.next(response.token);
+          observer.next(true);
+          observer.complete();
+          const pathCommands = this.constructPathCommands();
+          this._router.navigate(pathCommands);
+        },
+        error: err => observer.error(err)
+      });
+      return subscription;
+    });
   }
 
   private constructPathCommands(): Array<string> {

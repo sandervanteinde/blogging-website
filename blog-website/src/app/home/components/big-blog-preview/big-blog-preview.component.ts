@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { BlogListItem } from '../../models/blog';
 
 @Component({
   selector: 'app-big-blog-preview',
@@ -6,11 +7,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./big-blog-preview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BigBlogPreviewComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class BigBlogPreviewComponent {
+  @Input() blog!: BlogListItem;
 }

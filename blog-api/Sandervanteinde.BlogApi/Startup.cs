@@ -8,9 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Sandervanteinde.BlogApi.Configuration;
 using Swashbuckle.AspNetCore.Filters;
-using System;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Sandervanteinde.BlogApi
 {
@@ -28,6 +26,7 @@ namespace Sandervanteinde.BlogApi
         {
             services.AddControllers();
             services.Configure<BlogConfiguration>(Configuration);
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sandervanteinde.BlogApi", Version = "v1" });
@@ -71,6 +70,13 @@ namespace Sandervanteinde.BlogApi
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(builder => builder
+                .AllowAnyHeader()
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+            );
+
 
             app.UseRouting();
 

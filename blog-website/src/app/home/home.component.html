@@ -1,12 +1,7 @@
 <h1>Sander's Blog</h1>
 
-<app-big-blog-preview></app-big-blog-preview>
+<app-big-blog-preview *ngIf="highlightedBlog$ | async as blog" [blog]="blog"></app-big-blog-preview>
 
 <div class="blog-previews">
-  <app-small-blog-preview></app-small-blog-preview>
-  <app-small-blog-preview></app-small-blog-preview>
-  <app-small-blog-preview></app-small-blog-preview>
-  <app-small-blog-preview></app-small-blog-preview>
-  <app-small-blog-preview></app-small-blog-preview>
-  <app-small-blog-preview></app-small-blog-preview>
+  <app-small-blog-preview *ngFor="let blog of blogs$ | async" [blog]="blog"></app-small-blog-preview>
 </div>

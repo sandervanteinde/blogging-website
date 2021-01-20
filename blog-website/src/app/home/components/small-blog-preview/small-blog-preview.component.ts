@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { BlogListItem } from '../../models/blog';
 
 @Component({
   selector: 'app-small-blog-preview',
@@ -6,11 +7,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./small-blog-preview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SmallBlogPreviewComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class SmallBlogPreviewComponent {
+  @Input() blog!: BlogListItem;
 }

@@ -4,23 +4,21 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
-import { HomeComponent } from './home/home.component';
-import { BigBlogPreviewComponent } from './home/big-blog-preview/big-blog-preview.component';
-import { SmallBlogPreviewComponent } from './home/small-blog-preview/small-blog-preview.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { HttpClientModule } from '@angular/common/http';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    BigBlogPreviewComponent,
-    SmallBlogPreviewComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     LayoutModule,
-    MarkdownModule.forRoot()
+    MarkdownModule.forRoot(),
+    HttpClientModule,
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

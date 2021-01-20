@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Sandervanteinde.BlogApi.Controllers
 {
-    [Route("login")]
+    [Route("api/login")]
     public class LoginController : ControllerBase
     {
         private readonly IOptions<BlogConfiguration> opts;
