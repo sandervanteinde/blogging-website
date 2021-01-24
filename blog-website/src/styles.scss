@@ -1,24 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Lato:wght@300;400&display=swap');
+
+h1, h2, h3 {
+  font-family: var(--font-header);
+}
+
+h1 {
+  margin: 40px 0;
+  font-weight: 500;
+}
+
+h3 {
+  font-weight: 400;
+  font-size: 1.2em;
+}
+
 body {
   margin: 0;
+  background-color: #f7f7f7;
+  font-weight: 300;
+  font-size: 1.1em;
 }
 
 * {
   color: #333;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
 }
 :root {
-  --primary-color: rgb(14, 122, 231);
-  --primary-color-lighten: rgb(62, 150, 238);
+  --primary-color: #107ab0;
+  --primary-color-lighten: #009abd;
 
   --error-color: rgb(231, 70, 70);
 
   --image-border-radius: 10px;
+
+  --font-header: 'JetBrains Mono', monospace;
 }
 
 img {
   border-radius: var(--image-border-radius);
-}
-
-html {
-  background-color: #e8f4fc;
 }

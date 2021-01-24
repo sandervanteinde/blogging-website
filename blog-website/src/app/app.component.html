@@ -2,16 +2,25 @@
   <app-container>
     <div class="nav-container">
       <div class="nav-container__left">
-        <img src="https://picsum.photos/100/48" />
+        <img src="https://picsum.photos/75/75" />
         <ul>
           <li>
             <a
               [routerLink]="['/']"
               class="nav-container__link"
               routerLinkActive="nav-container__link--active"
-              [routerLinkActiveOptions]="{exact: true}"
+              [routerLinkActiveOptions]="{ exact: true }"
             >
               Home
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['/categories']"
+              class="nav-container__link"
+              routerLinkActive="nav-container__link--active"
+            >
+              Categories
             </a>
           </li>
           <li *ngIf="isAdmin$ | async">
@@ -27,6 +36,9 @@
       </div>
       <div class="nav-container__right">
         <ul>
+          <li>
+            <input type="text" placeholder="Search"/>
+          </li>
           <li>
             <a href="https://twitter.com/sandervanteinde" target="_blank">
               <img
