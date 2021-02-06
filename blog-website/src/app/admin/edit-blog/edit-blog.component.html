@@ -8,6 +8,7 @@
   <textarea class="new-blog__content-input" formControlName="markdownContent"></textarea>
   <div class="new-blog__preview">
     <h1>{{ blogForm.value.title }}</h1>
+    <img [src]="blogForm.value.logoUrl">
     <markdown emoji [lineNumbers]="true" [data]="blogForm.value.markdownContent"></markdown>
   </div>
   <button class="new-blog__save" app-button [disabled]="blogForm.invalid"> Save blog </button>
