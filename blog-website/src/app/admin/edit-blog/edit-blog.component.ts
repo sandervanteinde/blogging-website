@@ -2,11 +2,12 @@ import { ThrowStmt } from '@angular/compiler';
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder } from '@ngneat/reactive-forms';
-import { Observable, Subscription, throwError } from 'rxjs';
+import { FormArray, FormBuilder } from '@ngneat/reactive-forms';
+import { combineLatest, Observable, of, Subscription, throwError } from 'rxjs';
 import { debounceTime, filter, map, skip, switchMap, tap } from 'rxjs/operators';
 import { UntilDestroyed } from 'src/app/utils/until-destroyed';
 import { AdminService } from '../admin.service';
+import { Category } from '../models/category';
 
 export interface BlogForm {
   id: string;
@@ -14,22 +15,36 @@ export interface BlogForm {
   markdownContent: string;
   shortDescription: string;
   logoUrl: string;
+  categories: Array<Category>;
 }
 @Component({
   templateUrl: './edit-blog.component.html',
   styleUrls: ['./edit-blog.component.scss']
 })
 export class EditBlogComponent extends UntilDestroyed implements OnInit {
-  blogContents = '# The title<br/>Something interesting';
   state: 'dirty' | 'saving' | 'saved' | 'pristine' = 'pristine';
+
+  readonly allCategories$ = this._adminService.getCategories();
 
   readonly blogForm = this._formBuilder.group<BlogForm>({
     id: this._formBuilder.control('', [Validators.required]),
     title: this._formBuilder.control('', [Validators.required, Validators.maxLength(200)]),
     markdownContent: this._formBuilder.control('', [Validators.required]),
     shortDescription: this._formBuilder.control('', [Validators.required, Validators.maxLength(1000)]),
-    logoUrl: this._formBuilder.control('', [Validators.required, Validators.maxLength(200)])
+    logoUrl: this._formBuilder.control('', [Validators.required, Validators.maxLength(200)]),
+    categories: this._formBuilder.array([])
   });
+
+  readonly availableCategories$ = combineLatest([
+    this.blogForm.value$.pipe(map(value => value.categories)),
+    this.allCategories$
+  ]).pipe(
+    map(([selectedCategories, allCategories]) => {
+      var newSet = new Map(allCategories.map(e => ([e.id, e])));
+      for(const category of selectedCategories) newSet.delete(category.id);
+      return Array.from(newSet.values());
+    })
+  );
 
   constructor(
     private readonly _formBuilder: FormBuilder,
@@ -77,6 +92,14 @@ export class EditBlogComponent extends UntilDestroyed implements OnInit {
         this._router.navigate(['/admin']);
       })
     }
+  }
+
+  addCategory(category: Category): void {
+    (this.blogForm.getControl('categories') as FormArray<Category>).push(this._formBuilder.control(category));
+  }
+
+  removeCategory(category: Category): void {
+    (this.blogForm.getControl('categories') as FormArray<Category>).removeWhen(e => e.value.id === category.id);
   }
 
   private doSave(): Observable<unknown> {

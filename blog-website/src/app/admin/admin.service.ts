@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AdminBlog } from './models/admin-blog';
 import { BlogForm } from './edit-blog/edit-blog.component';
 import { map } from 'rxjs/operators';
+import { Category } from './models/category';
 
 interface PatchBlogModel {
   newStatus?: AdminBlog['status'];
@@ -40,5 +41,9 @@ export class AdminService {
 
   deleteBlog(id: string): Observable<unknown> {
     return this._httpClient.delete(`${environment.apiUrl}/admin/blogs/${id}`);
+  }
+
+  getCategories(): Observable<Category[]> {
+    return this._httpClient.get<Category[]>(`${environment.apiUrl}/admin/categories`);
   }
 }

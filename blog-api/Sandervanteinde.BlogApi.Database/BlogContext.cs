@@ -8,6 +8,7 @@ namespace Sandervanteinde.BlogApi.Database
     {
         public DbSet<Blog> Blogs { get; set; } = null!;
         public DbSet<BlogUrl> BlogUrls { get; set; } = null!;
+        public DbSet<BlogCategory> BlogCategories { get; set; } = null!;
 
         public BlogContext(DbContextOptions<BlogContext> opts)
             : base(opts)

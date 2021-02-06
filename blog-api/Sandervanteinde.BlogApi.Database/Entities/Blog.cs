@@ -15,6 +15,7 @@ namespace Sandervanteinde.BlogApi.Database.Entities
         public BlogStatus Status { get; set; }
         public DateTime? DatePublished { get; set; }
         public List<BlogUrl> BlogUrls { get; set; } = null!;
+        public List<BlogCategory> Categories { get; set; } = null!;
         public enum BlogStatus
         {
             // database field is max 20 characters

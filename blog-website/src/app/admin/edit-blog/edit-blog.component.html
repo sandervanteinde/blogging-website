@@ -11,6 +11,19 @@
     <img [src]="blogForm.value.logoUrl">
     <markdown emoji [lineNumbers]="true" [data]="blogForm.value.markdownContent"></markdown>
   </div>
+  <div class="new-blog__assigned-categories">
+    <h3>Assigned categories</h3>
+    <app-button-group>
+      <button app-button *ngFor="let category of blogForm.value.categories" (click)="removeCategory(category)">{{category.name}}</button>
+    </app-button-group>
+  </div>
+  <div class="new-blog__available-categories">
+    <h3>Available categories</h3>
+    <app-button-group>
+      <button app-button *ngFor="let category of availableCategories$ | async" (click)="addCategory(category)">{{category.name}}</button>
+    </app-button-group>
+  </div>
+  <div></div>
   <button class="new-blog__save" app-button [disabled]="blogForm.invalid"> Save blog </button>
 </form>
 
