@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Lato:wght@300;400&display=swap');
+@import "./styles/rebranding";
 
 h1, h2, h3 {
   font-family: var(--font-header);
@@ -19,18 +20,21 @@ body {
   background-color: #f7f7f7;
   font-weight: 300;
   font-size: 1.1em;
-}
-
-* {
   color: #333;
   font-family: 'Lato', sans-serif;
   font-weight: 300;
 }
+
 :root {
   --primary-color: #107ab0;
   --primary-color-lighten: #009abd;
 
-  --error-color: rgb(231, 70, 70);
+  --error-color: #e74646;
+  --error-color-lighten: #ee7474;
+
+  --warning-color: #ecb726;
+
+  --success-color: #3dd151;
 
   --image-border-radius: 10px;
 

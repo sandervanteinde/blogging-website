@@ -6,5 +6,5 @@
   <p>
     {{blog.shortDescription}}
   </p>
-  <app-button>Read more</app-button>
+  <a app-button [routerLink]="['/', blog.url]">Read more</a>
 </article>

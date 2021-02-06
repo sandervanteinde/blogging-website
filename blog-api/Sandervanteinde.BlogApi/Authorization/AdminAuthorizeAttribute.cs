@@ -19,6 +19,11 @@ namespace Sandervanteinde.BlogApi.Authorization
         {
             public void OnAuthorization(AuthorizationFilterContext context)
             {
+                if(context.HttpContext.User.Identity?.IsAuthenticated != true)
+                {
+                    context.Result = new UnauthorizedResult();
+                    return;
+                }
                 var user = context.HttpContext.User;
                 if (user.Claims.Any(c => c.Type == "user-role" && c.Value == "Admin")) return;
                 context.Result = new ForbidResult();

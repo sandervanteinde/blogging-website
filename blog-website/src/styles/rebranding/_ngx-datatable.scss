@@ -1,0 +1,15 @@
+.ngx-datatable {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+
+  .datatable-header {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    border-bottom: 1px solid #e7e7e7;
+  }
+  .datatable-row-wrapper {
+    margin: 10px 0;
+  }
+}

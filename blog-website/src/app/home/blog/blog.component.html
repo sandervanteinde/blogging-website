@@ -1,0 +1,19 @@
+<ng-template #layout let-title="title" let-url="url" let-content="content">
+  <div class="blog">
+    <h2 class="blog__title">{{title}}</h2>
+    <img class="blog__logo" [src]="url">
+    <markdown class="blog__contents" [data]="content"></markdown>
+  </div>
+</ng-template>
+
+<ng-container *ngIf="blog$ | async as blog">
+  <ng-container *ngTemplateOutlet="layout; context: {title: blog.title, url: blog.logoUrl, content: blog.markdownContent}"></ng-container>
+</ng-container>
+
+<ng-container *ngIf="isNotFoundError$ | async">
+  <ng-container *ngTemplateOutlet="layout; context: {title: 'Not found', url: 'https://picsum.photos/800/300', content: 'The requested blog was not found.'}"></ng-container>
+</ng-container>
+
+<ng-container *ngIf="isGenericError$ | async">
+  <ng-container *ngTemplateOutlet="layout; context: {title: 'Error!', url: 'https://picsum.photos/800/300', content: 'An unknown error occured. Try again later'}"></ng-container>
+</ng-container>

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { BlogListItem } from '../models/blog';
+import { Blog, BlogListItem } from '../models/blog';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +18,9 @@ export class BlogService {
     return this._httpClient.get<BlogListItem[]>(`${environment.apiUrl}/blogs`, {
       params: { index: index.toString(), amount: amount.toString() }
     })
+  }
+
+  getBlogByTitle(title: string): Observable<Blog> {
+    return this._httpClient.get<Blog>(`${environment.apiUrl}/blogs/${title}`);
   }
 }

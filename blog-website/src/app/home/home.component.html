@@ -1,5 +1,10 @@
 <h1>Sander's Blog</h1>
 
+<ng-container *ngIf="areBlogsUnavailable$ | async">
+  There are no blogs available at this time.
+  This could be due to server maintenance or there simply are no blogs yet!
+</ng-container>
+
 <app-big-blog-preview *ngIf="highlightedBlog$ | async as blog" [blog]="blog"></app-big-blog-preview>
 
 <div class="blog-previews">

@@ -1,24 +1,18 @@
-﻿using System;
+﻿using Sandervanteinde.BlogApi.Messages.Commands;
+using Sandervanteinde.BlogApi.Messages.Models;
+using Sandervanteinde.BlogApi.Messages.Queries;
+using System;
 
 namespace Sandervanteinde.BlogApi.Models
 {
-    public record BlogQuery(int? StartIndex, int? Amount)
+    public record NullableBlogQuery(int? StartIndex, int? Amount)
     {
-        public BlogQuery WithDefaultsFilled() => this with
-        {
-            StartIndex = StartIndex ?? 0,
-            Amount = Amount ?? 10
-        };
+        public BlogListQuery ToQuery() => new(StartIndex ?? 0, Amount ?? 10);
     }
-    public record BlogListItem(Guid Id, string Title, string LogoUrl, string ShortDescription);
 
-    public record Blog : BlogListItem
+    public record PatchBlogModel(BlogStatus? NewStatus, NewBlogItem? NewBlogContents);
+    public record NewBlogItem(string LogoUrl, string MarkdownContent, string ShortDescription, string Title)
     {
-        public string MarkdownContent { get; }
-        public Blog(Guid id, string title, string logoUrl, string shortDescription, string markdownContent)
-            : base(id, title, logoUrl, shortDescription)
-        {
-            MarkdownContent = markdownContent;
-        }
-    }
+        public UpdateBlogContentsCommand ToCommand(Guid id) => new(id, LogoUrl, MarkdownContent, ShortDescription, Title);
+    };
 }

@@ -4,9 +4,10 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
-import { MarkdownModule } from 'ngx-markdown';
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './home/home.module';
+import { MarkdownOptions } from './utils/markdown-options';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,12 @@ import { HomeModule } from './home/home.module';
     HttpClientModule,
     HomeModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MarkedOptions,
+      useClass: MarkdownOptions
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

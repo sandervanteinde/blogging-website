@@ -1,0 +1,21 @@
+<ngx-datatable columnMode="force" class="material" [rows]="blogs$ | async">
+  <ngx-datatable-column name="id"></ngx-datatable-column>
+  <ngx-datatable-column name="title"></ngx-datatable-column>
+  <ngx-datatable-column name="actions">
+    <ng-template ngx-datatable-cell-template let-blog="row">
+      <app-button-group>
+        <ng-container *ngIf="blog.status === 'published'; else draftButtons">
+          <a app-button [routerLink]="['/', blog.url]">View</a>
+          <button app-button (click)="toggleStatus(blog)">Mark as draft</button>
+        </ng-container>
+        <ng-template #draftButtons>
+          <button app-button (click)="toggleStatus(blog)">Publish</button>
+          <a app-button [routerLink]="['/admin', blog.id, 'edit']">Edit</a>
+          <button app-button="danger" (click)="deleteBlog(blog)" *ngIf="blog.status === 'draft'">
+            Delete
+          </button>
+        </ng-template>
+      </app-button-group>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>

@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { map, pluck } from 'rxjs/operators';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { of } from 'rxjs';
+import { catchError, map, pluck, shareReplay } from 'rxjs/operators';
 import { BlogService } from './services/blog.service';
 
 @Component({
@@ -9,7 +10,11 @@ import { BlogService } from './services/blog.service';
 })
 export class HomeComponent {
 
-  private readonly _allHomePageBlogs$ = this._blogService.getBlogs({amount: 7});
+  private readonly _allHomePageBlogs$ = this._blogService.getBlogs({amount: 7}).pipe(shareReplay(1));
+  readonly areBlogsUnavailable$ = this._allHomePageBlogs$.pipe(
+    map(blogs => blogs.length === 0),
+    catchError(() => of(true))
+  );
   readonly highlightedBlog$ = this._allHomePageBlogs$.pipe(pluck(0));
   readonly blogs$ = this._allHomePageBlogs$.pipe(map(([, ...blogs]) => blogs));
 

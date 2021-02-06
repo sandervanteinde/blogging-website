@@ -7,8 +7,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Sandervanteinde.BlogApi.Configuration;
+using Sandervanteinde.BlogApi.Database;
+using Sandervanteinde.BlogApi.Infrastructure;
+using Sandervanteinde.BlogApi.Messages;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Sandervanteinde.BlogApi
 {
@@ -24,7 +29,10 @@ namespace Sandervanteinde.BlogApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(opts => {
+                    opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+                });
             services.Configure<BlogConfiguration>(Configuration);
             services.AddCors();
             services.AddSwaggerGen(c =>
@@ -57,6 +65,10 @@ namespace Sandervanteinde.BlogApi
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
                     };
                 });
+
+            services.AddDatabaseServices(Configuration.GetConnectionString("BlogContext"));
+            services.AddMessaging();
+            services.AddInfrastructure();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,13 @@
+services:
+  database:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: MyVeryStrongPassword1!
+    ports:
+      - 1433:1433
+    volumes:
+      - sqlserver:/sqlserver
+volumes:
+  sqlserver:
+    driver: local

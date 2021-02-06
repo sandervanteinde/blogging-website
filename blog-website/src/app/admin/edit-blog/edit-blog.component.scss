@@ -1,0 +1,43 @@
+input, textarea {
+  font-family: var(--font-header)
+}
+textarea {
+  resize: vertical;
+}
+.new-blog {
+  &__title-input {
+    grid-area: title;
+  }
+  &__subtitle-input {
+    grid-area: subtitle;
+  }
+
+  &__status {
+    grid-area: status;
+
+    &--pristine, &--saved {
+      color: var(--success-color);
+    }
+
+    &--dirty, &--saving {
+      color: var(--warning-color);
+    }
+  }
+
+  &__editor {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    gap: 30px;
+    grid-template-areas: "title title status" "subtitle subtitle subtitle" "editor preview preview";
+    grid-template-columns: 50% 40% 10%;
+  }
+
+  &__content-input {
+    grid-area: editor;
+  }
+
+  &__preview {
+    grid-area: preview;
+  }
+}

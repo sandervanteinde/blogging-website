@@ -10,4 +10,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="6.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sandervanteinde.BlogApi.Database\Sandervanteinde.BlogApi.Database.csproj" />
+    <ProjectReference Include="..\Sandervanteinde.BlogApi.Infrastructure\Sandervanteinde.BlogApi.Infrastructure.csproj" />
+    <ProjectReference Include="..\Sandervanteinde.BlogApi.Messages\Sandervanteinde.BlogApi.Messages.csproj" />
+  </ItemGroup>
 </Project>

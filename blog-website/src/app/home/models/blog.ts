@@ -3,6 +3,7 @@ export interface BlogListItem {
   title: string;
   logoUrl: string;
   shortDescription: string;
+  url: string;
 }
 
 export interface Blog extends BlogListItem {

@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS0006: Metadata file 'C:\Repositories\blogging-website\blog-api\Sandervanteinde.BlogApi.Messages\bin\Debug\net5.0\ref\Sandervanteinde.BlogApi.Messages.dll' could not be found
+dotnet_diagnostic.CS0006.severity = none

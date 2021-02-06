@@ -1,0 +1,5 @@
+.button-group {
+  [role=button]:not(:first-child) {
+    margin-left: 10px;
+  }
+}
