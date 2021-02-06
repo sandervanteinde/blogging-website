@@ -8,6 +8,7 @@ import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './home/home.module';
 import { MarkdownOptions } from './utils/markdown-options';
+import { TitlesModule } from './utils/titles/titles.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MarkdownOptions } from './utils/markdown-options';
     LayoutModule,
     MarkdownModule.forRoot(),
     HttpClientModule,
-    HomeModule
+    HomeModule,
+    TitlesModule
   ],
   providers: [
     {
