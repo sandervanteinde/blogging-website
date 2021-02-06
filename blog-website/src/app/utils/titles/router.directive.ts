@@ -1,7 +1,7 @@
 import { Directive, Host, Optional, SkipSelf } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
+import { catchError, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { componentIsTitledComponent, TitledComponent } from '../titled-component';
 import { UntilDestroyed } from '../until-destroyed';
 import { TitleRegistryService } from './title-registry.service';
@@ -28,6 +28,7 @@ export class RouterDirective extends UntilDestroyed {
         }
         return of(titleAsObservableOrString);
       }),
+      catchError(() => of('')),
       distinctUntilChanged(),
       this.untilDestroyed()
     ).subscribe(newTitle => _titleRegistryService.setTitle(this._id, newTitle));
