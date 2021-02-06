@@ -1,6 +1,8 @@
 <p>It seems like you made it to the password-protected section.</p>
-<p>Please provide the password below:</p>
+<p>Please provide the password below to access the website's restricted section</p>
 <form [formGroup]="loginForm" (ngSubmit)="doLogin()">
   <input autocomplete="current-password" type="password" formControlName="password" />
 </form>
 <p class="login__error-message" *ngIf="showAlert">Invalid password</p>
+
+<img src="https://media3.giphy.com/media/8abAbOrQ9rvLG/200.gif">

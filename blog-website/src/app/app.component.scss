@@ -12,7 +12,10 @@ nav {
   justify-content: space-between;
   align-items: center;
   height: 100px;
-
+  &__logo {
+    color: white;
+    text-transform: uppercase;
+  }
   > div {
     display: flex;
     align-items: center;
