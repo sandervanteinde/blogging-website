@@ -7,6 +7,7 @@ import { LayoutModule } from '../layout/layout.module';
 import { BlogComponent } from './blog/blog.component';
 import { RouterModule } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
+import { AboutComponent } from './about/about.component';
 
 
 
@@ -15,7 +16,8 @@ import { MarkdownModule } from 'ngx-markdown';
     HomeComponent,
     BigBlogPreviewComponent,
     SmallBlogPreviewComponent,
-    BlogComponent
+    BlogComponent,
+    AboutComponent
   ],
   imports: [
     CommonModule,
@@ -23,6 +25,6 @@ import { MarkdownModule } from 'ngx-markdown';
     RouterModule,
     MarkdownModule.forChild()
   ],
-  exports: [ HomeComponent, BlogComponent ]
+  exports: [ HomeComponent, BlogComponent, AboutComponent ]
 })
 export class HomeModule { }
