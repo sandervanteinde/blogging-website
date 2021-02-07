@@ -6,14 +6,15 @@ import { TimeIndicatorDirective } from './time-indicator.directive';
 import { ButtonGroupComponent } from './button-group/button-group.component';
 import { BadgeComponent } from './badge/badge.component';
 import { BadgeContainerComponent } from './badge-container/badge-container.component';
+import { CardComponent } from './card/card.component';
 
 
 
 @NgModule({
-  declarations: [ContainerComponent, ButtonComponent, TimeIndicatorDirective, ButtonGroupComponent, BadgeComponent, BadgeContainerComponent],
+  declarations: [ContainerComponent, ButtonComponent, TimeIndicatorDirective, ButtonGroupComponent, BadgeComponent, BadgeContainerComponent, CardComponent],
   imports: [
     CommonModule
   ],
-  exports: [ContainerComponent, ButtonComponent, TimeIndicatorDirective, ButtonGroupComponent, BadgeComponent, BadgeContainerComponent]
+  exports: [ContainerComponent, ButtonComponent, TimeIndicatorDirective, ButtonGroupComponent, BadgeComponent, BadgeContainerComponent, CardComponent]
 })
 export class LayoutModule { }

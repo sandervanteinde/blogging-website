@@ -1,11 +1,13 @@
-<article>
-  <img [src]="blog.logoUrl" />
+<app-card>
+  <article>
+    <img [src]="blog.logoUrl" />
 
-  <h3>{{blog.title}}</h3>
-  <app-badge-container [categories]="blog.categories"></app-badge-container>
+    <h3>{{ blog.title }}</h3>
+    <app-badge-container [categories]="blog.categories"></app-badge-container>
 
-  <p>
-    {{blog.shortDescription}}
-  </p>
-  <a app-button [routerLink]="['/', blog.url]">Read more</a>
-</article>
+    <p>
+      {{ blog.shortDescription }}
+    </p>
+    <a app-button [routerLink]="['/', blog.url]">Read more</a>
+  </article>
+</app-card>

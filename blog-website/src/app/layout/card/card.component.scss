@@ -1,0 +1,9 @@
+.card {
+  padding: 26px;
+  border-radius: 4px;
+  background-color: white;
+
+  &--expanded-height {
+    height: 100%;
+  }
+}
