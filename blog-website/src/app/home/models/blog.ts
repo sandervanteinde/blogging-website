@@ -4,6 +4,7 @@ export interface BlogListItem {
   logoUrl: string;
   shortDescription: string;
   url: string;
+  categories: Array<string>;
 }
 
 export interface Blog extends BlogListItem {

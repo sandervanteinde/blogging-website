@@ -14,6 +14,7 @@ interface PatchBlogModel {
     markdownContent: string;
     shortDescription: string;
     title: string;
+    categoryIds: Array<string>
   }
 }
 
@@ -45,5 +46,9 @@ export class AdminService {
 
   getCategories(): Observable<Category[]> {
     return this._httpClient.get<Category[]>(`${environment.apiUrl}/admin/categories`);
+  }
+
+  createCategory(categoryName: string): Observable<unknown> {
+    return this._httpClient.post(`${environment.apiUrl}/admin/categories`, { categoryName });
   }
 }

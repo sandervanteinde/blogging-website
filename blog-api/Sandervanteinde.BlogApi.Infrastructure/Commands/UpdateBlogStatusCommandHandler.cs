@@ -32,7 +32,7 @@ namespace Sandervanteinde.BlogApi.Infrastructure.Commands
             request.Deconstruct(out var blogId, out var newStatus);
             var blog = await context.Blogs
                 .Include(b => b.BlogUrls)
-                .FirstOrDefaultAsync(blog => blog.Id == blogId);
+                .FirstOrDefaultAsync(blog => blog.Id == blogId, cancellationToken);
 
             if(blog is null)
             {

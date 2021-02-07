@@ -11,8 +11,8 @@ namespace Sandervanteinde.BlogApi.Models
     }
 
     public record PatchBlogModel(BlogStatus? NewStatus, NewBlogItem? NewBlogContents);
-    public record NewBlogItem(string LogoUrl, string MarkdownContent, string ShortDescription, string Title)
+    public record NewBlogItem(string LogoUrl, string MarkdownContent, string ShortDescription, string Title, Guid[] CategoryIds)
     {
-        public UpdateBlogContentsCommand ToCommand(Guid id) => new(id, LogoUrl, MarkdownContent, ShortDescription, Title);
+        public UpdateBlogContentsCommand ToCommand(Guid id) => new(id, LogoUrl, MarkdownContent, ShortDescription, Title, CategoryIds);
     };
 }

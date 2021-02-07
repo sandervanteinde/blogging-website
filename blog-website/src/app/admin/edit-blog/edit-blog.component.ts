@@ -3,7 +3,7 @@ import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@
 import { Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder } from '@ngneat/reactive-forms';
-import { combineLatest, Observable, of, Subscription, throwError } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, of, Subscription, throwError } from 'rxjs';
 import { debounceTime, filter, map, skip, switchMap, tap } from 'rxjs/operators';
 import { UntilDestroyed } from 'src/app/utils/until-destroyed';
 import { AdminService } from '../admin.service';
@@ -22,9 +22,15 @@ export interface BlogForm {
   styleUrls: ['./edit-blog.component.scss']
 })
 export class EditBlogComponent extends UntilDestroyed implements OnInit {
+  private readonly _updateCategories$ = new BehaviorSubject<void>(undefined);
   state: 'dirty' | 'saving' | 'saved' | 'pristine' = 'pristine';
+  addingCategory = false;
 
-  readonly allCategories$ = this._adminService.getCategories();
+  readonly allCategories$ = this._updateCategories$.pipe(switchMap(() => this._adminService.getCategories()));
+
+  readonly newCategory = this._formBuilder.group<{name: string}>({
+    name: this._formBuilder.control('', [Validators.required])
+  });
 
   readonly blogForm = this._formBuilder.group<BlogForm>({
     id: this._formBuilder.control('', [Validators.required]),
@@ -72,7 +78,11 @@ export class EditBlogComponent extends UntilDestroyed implements OnInit {
         markdownContent: newBlog.markdownContent,
         shortDescription: newBlog.shortDescription,
         title: newBlog.title
-      }, { emitEvent: false });
+      });
+
+      const categories = this.blogForm.getControl('categories') as FormArray<Category>;
+      categories.clear();
+      newBlog.categories.forEach(category => categories.push(this._formBuilder.control(category)));
 
       subscription = this.blogForm.value$.pipe(
         skip(1),
@@ -81,6 +91,18 @@ export class EditBlogComponent extends UntilDestroyed implements OnInit {
         tap(() => this.state = 'saving'),
         switchMap(() => this.doSave())
       ).subscribe(() => this.state = 'saved');
+    });
+  }
+
+  createCategory(): void {
+    const newCategory = this.newCategory.value;
+    this._adminService.createCategory(newCategory.name).subscribe({
+      next: () => {
+        this._updateCategories$.next();
+        this.newCategory.reset({name: ''});
+        this.addingCategory = false;
+      },
+      error: () => alert('Something went wrong adding the category')
     });
   }
 
@@ -103,7 +125,7 @@ export class EditBlogComponent extends UntilDestroyed implements OnInit {
   }
 
   private doSave(): Observable<unknown> {
-    const { id, markdownContent, title, logoUrl, shortDescription } = this.blogForm.value;
-    return this._adminService.patchBlog(id, {newBlogContents: {logoUrl, title, markdownContent, shortDescription } });
+    const { id, markdownContent, title, logoUrl, shortDescription, categories } = this.blogForm.value;
+    return this._adminService.patchBlog(id, { newBlogContents: {logoUrl, title, markdownContent, shortDescription, categoryIds: categories.map(c => c.id) } });
   }
 }

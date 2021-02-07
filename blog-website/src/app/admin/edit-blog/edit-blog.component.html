@@ -21,7 +21,13 @@
     <h3>Available categories</h3>
     <app-button-group>
       <button app-button *ngFor="let category of availableCategories$ | async" (click)="addCategory(category)">{{category.name}}</button>
+      <button (click)="addingCategory = true" app-button *ngIf="!addingCategory; else addCategoryForm"> + New category</button>
     </app-button-group>
+    <ng-template #addCategoryForm>
+      <form [formGroup]="newCategory" (ngSubmit)="createCategory()">
+        <input formControlName="name">
+      </form>
+    </ng-template>
   </div>
   <div></div>
   <button class="new-blog__save" app-button [disabled]="blogForm.invalid"> Save blog </button>

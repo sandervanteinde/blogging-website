@@ -22,7 +22,14 @@ namespace Sandervanteinde.BlogApi.Infrastructure.Queries
             request.Deconstruct(out var title);
             var blog = await context.BlogUrls
                 .Where(url => url.UrlFriendlyTitle == title && url.Blog.Status == Database.Entities.Blog.BlogStatus.Published)
-                .Select(url => new Blog(url.Blog.Id, url.Blog.Title, url.Blog.LogoUrl, url.Blog.ShortDescription, url.Blog.MarkdownContent))
+                .Select(url => new Blog(
+                    url.Blog.Id,
+                    url.Blog.Title,
+                    url.Blog.LogoUrl,
+                    url.Blog.ShortDescription,
+                    url.Blog.MarkdownContent,
+                    url.Blog.Categories.Select(c => c.Category).ToList()
+                ))
                 .FirstOrDefaultAsync(cancellationToken);
 
             return blog;

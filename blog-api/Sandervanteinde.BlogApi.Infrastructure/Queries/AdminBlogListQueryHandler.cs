@@ -26,7 +26,7 @@ namespace Sandervanteinde.BlogApi.Infrastructure.Queries
         {
             return await context.Blogs
                 .OrderByDescending(b => b.DatePublished)
-                .Select(b => new AdminBlogListItem(b.Id, b.Title, b.ShortDescription, b.Status.ToModel(), b.BlogUrls.FirstOrDefault().UrlFriendlyTitle))
+                .Select(b => new AdminBlogListItem(b.Id, b.Title, b.ShortDescription, b.Status.ToModel(), b.BlogUrls.FirstOrDefault()!.UrlFriendlyTitle))
                 .ToListAsync(cancellationToken);
         }
     }

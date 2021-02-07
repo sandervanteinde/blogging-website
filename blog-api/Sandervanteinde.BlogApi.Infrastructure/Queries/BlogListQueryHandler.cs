@@ -25,7 +25,14 @@ namespace Sandervanteinde.BlogApi.Infrastructure.Queries
                 .OrderByDescending(b => b.DatePublished)
                 .Skip(request.StartIndex)
                 .Take(request.Amount)
-                .Select(blog => new BlogListItem(blog.Id, blog.Title, blog.LogoUrl, blog.ShortDescription, blog.BlogUrls.First().UrlFriendlyTitle))
+                .Select(blog => new BlogListItem(
+                    blog.Id,
+                    blog.Title,
+                    blog.LogoUrl,
+                    blog.ShortDescription,
+                    blog.BlogUrls.First().UrlFriendlyTitle,
+                    blog.Categories.Select(c => c.Category).ToList()
+                ))
                 .ToListAsync(cancellationToken);
         }
     }

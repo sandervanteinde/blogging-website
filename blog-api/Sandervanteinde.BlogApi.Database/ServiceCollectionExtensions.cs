@@ -1,17 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Sandervanteinde.BlogApi.Database.HostedServices;
-using System.Threading;
-using System.Threading.Tasks;
+using System;
 
 namespace Sandervanteinde.BlogApi.Database
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddDatabaseServices(this IServiceCollection services, string connectionString)
+        public static void AddDatabaseServices(this IServiceCollection services, string connectionString, bool isDevelopment)
         {
-            services.AddDbContext<BlogContext>(opt => opt.UseSqlServer(connectionString));
+            services.AddDbContext<BlogContext>(opt => {
+                opt.UseSqlServer(connectionString);
+                if(isDevelopment)
+                {
+                    opt.LogTo(Console.WriteLine);
+                }
+            });
 
             services.AddHostedService<MigrationHostedService>();
         }

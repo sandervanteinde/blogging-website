@@ -23,7 +23,15 @@ namespace Sandervanteinde.BlogApi.Infrastructure.Queries
         {
             return context.Blogs
                 .Where(blog => blog.Id == request.BlogId)
-                .Select(blog => new AdminBlog(blog.Id, blog.Title, blog.LogoUrl, blog.ShortDescription, blog.Status.ToModel(), blog.MarkdownContent))
+                .Select(blog => new AdminBlog(
+                    blog.Id,
+                    blog.Title,
+                    blog.LogoUrl,
+                    blog.ShortDescription,
+                    blog.Status.ToModel(),
+                    blog.MarkdownContent,
+                    blog.Categories.Select(b => new Category(b.Id, b.Category)).ToList()
+                ))
                 .FirstOrDefaultAsync(cancellationToken);
         }
     }

@@ -2,6 +2,7 @@
   <img [src]="blog.logoUrl" />
 
   <h3>{{blog.title}}</h3>
+  <app-badge-container [categories]="blog.categories"></app-badge-container>
 
   <p>
     {{blog.shortDescription}}

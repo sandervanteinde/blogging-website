@@ -1,13 +1,14 @@
-<ng-template #layout let-title="title" let-url="url" let-content="content">
+<ng-template #layout let-title="title" let-url="url" let-content="content" let-categories="categories">
   <div class="blog">
     <h2 class="blog__title">{{title}}</h2>
     <img class="blog__logo" [src]="url">
+    <app-badge-container *ngIf="categories" [categories]="categories"></app-badge-container>
     <markdown class="blog__contents" emoji [lineNumbers]="true" [data]="content"></markdown>
   </div>
 </ng-template>
 
 <ng-container *ngIf="blog$ | async as blog">
-  <ng-container *ngTemplateOutlet="layout; context: {title: blog.title, url: blog.logoUrl, content: blog.markdownContent}"></ng-container>
+  <ng-container *ngTemplateOutlet="layout; context: {title: blog.title, url: blog.logoUrl, content: blog.markdownContent, categories: blog.categories}"></ng-container>
 </ng-container>
 
 <ng-container *ngIf="isNotFoundError$ | async">

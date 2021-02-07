@@ -1,6 +1,6 @@
 .blog {
   display: grid;
-  grid-template-areas: "title" "logo" "contents";
+  grid-template-areas: "title" "logo" "categories" "contents";
 
   > * {
     width: 100%;
