@@ -21,7 +21,7 @@ body {
   font-weight: 300;
   font-size: 1.1em;
   color: #333;
-  font-family: 'Lato', sans-serif;
+  font-family: var(--font-default);
   font-weight: 300;
 }
 
@@ -38,6 +38,7 @@ body {
 
   --image-border-radius: 10px;
 
+  --font-default: 'Lato', sans-serif;
   --font-header: 'JetBrains Mono', monospace;
 }
 
