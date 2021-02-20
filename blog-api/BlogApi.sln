@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandervanteinde.BlogApi", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandervanteinde.BlogApi.Database", "Sandervanteinde.BlogApi.Database\Sandervanteinde.BlogApi.Database.csproj", "{D88E8A0E-50AD-433B-9E5B-9E427651B91A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandervanteinde.BlogApi.Infrastructure", "Sandervanteinde.BlogApi.Infrastructure\Sandervanteinde.BlogApi.Infrastructure.csproj", "{58C0EB78-679E-43EF-B639-8F6706A05F5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandervanteinde.BlogApi.Infrastructure", "Sandervanteinde.BlogApi.Infrastructure\Sandervanteinde.BlogApi.Infrastructure.csproj", "{58C0EB78-679E-43EF-B639-8F6706A05F5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandervanteinde.BlogApi.Messages", "Sandervanteinde.BlogApi.Messages\Sandervanteinde.BlogApi.Messages.csproj", "{3D3B7584-F2C4-4DFB-959A-4318F6A9CC1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandervanteinde.BlogApi.Messages", "Sandervanteinde.BlogApi.Messages\Sandervanteinde.BlogApi.Messages.csproj", "{3D3B7584-F2C4-4DFB-959A-4318F6A9CC1D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1C6BF63C-0B38-4059-BDEB-C9B1ECC99A3A}"
 	ProjectSection(SolutionItems) = preProject
