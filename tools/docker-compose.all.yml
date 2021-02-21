@@ -1,0 +1,11 @@
+services:
+  api:
+    build: ../blog-api
+    image: sandervanteinde/blog-api
+    depends_on:
+      - database
+  web:
+    build: ../blog-website
+    image: sandervanteinde/blog-website
+    depends_on: 
+      - api
