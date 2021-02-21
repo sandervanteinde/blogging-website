@@ -1,4 +1,14 @@
+version: '3'
+
 services:
+  reverse:
+    build: ../reverse-proxy
+    image: sandervanteinde/reverse-proxy
+    ports:
+      - 80:80
+    depends_on:
+      - api
+      - web
   api:
     build: ../blog-api
     image: sandervanteinde/blog-api
