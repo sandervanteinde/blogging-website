@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './home/home.module';
 import { MarkdownOptions } from './utils/markdown-options';
 import { TitlesModule } from './utils/titles/titles.module';
+import { EnvironmentService } from './environment.service';
+import { API_URL } from './utils/api-url';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,17 @@ import { TitlesModule } from './utils/titles/titles.module';
     {
       provide: MarkedOptions,
       useClass: MarkdownOptions
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (env: EnvironmentService) => env.initialize(),
+      deps: [EnvironmentService],
+      multi: true
+    },
+    {
+      provide: API_URL,
+      useFactory: (env: EnvironmentService) => env.apiHost,
+      deps: [EnvironmentService]
     }
   ],
   bootstrap: [AppComponent]

@@ -3,7 +3,6 @@ import { Validators } from '@angular/forms';
 import { FormBuilder } from '@ngneat/reactive-forms';
 import { LoginService } from '../login.service';
 import { filter, first } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 
 @Component({
   templateUrl: './login.component.html',
@@ -19,11 +18,11 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private readonly _fb: FormBuilder,
-    private readonly _loginService: LoginService
+    private readonly _loginService: LoginService,
   ) { }
 
   ngOnInit(): void {
-    if(!environment.production) {
+    if(window.location.href.startsWith('http://localhost')) {
       this.loginForm.reset({password: 'HelloWorld123'});
       this.doLogin();
     }

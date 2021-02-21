@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { BehaviorSubject, Observable, of, ReplaySubject } from 'rxjs';
-import { catchError, map, startWith, tap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { API_URL } from '../utils/api-url';
 
 @Injectable({providedIn: 'root'})
 export class LoginService {
@@ -14,7 +14,8 @@ export class LoginService {
 
   constructor(
     private readonly _router: Router,
-    private readonly _httpClient: HttpClient
+    private readonly _httpClient: HttpClient,
+    @Inject(API_URL) private readonly _apiUrl: string
   ) { }
 
   setReturnRoute(activatedRoute: ActivatedRouteSnapshot): void {
@@ -23,7 +24,7 @@ export class LoginService {
 
   doLogin(password: string): Observable<boolean> {
     return new Observable(observer => {
-      const subscription = this._httpClient.post<{token: string}>(`${environment.apiUrl}/login`, { password }).subscribe({
+      const subscription = this._httpClient.post<{token: string}>(`${this._apiUrl}/login`, { password }).subscribe({
         next: response => {
           this.token$.next(response.token);
           observer.next(true);

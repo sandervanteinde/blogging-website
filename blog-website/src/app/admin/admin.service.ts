@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { API_URL } from '../utils/api-url';
 import { AdminBlog } from './models/admin-blog';
-import { BlogForm } from './edit-blog/edit-blog.component';
-import { map } from 'rxjs/operators';
 import { Category } from './models/category';
 
 interface PatchBlogModel {
@@ -20,35 +18,36 @@ interface PatchBlogModel {
 
 @Injectable()
 export class AdminService {
-  constructor(private readonly _httpClient: HttpClient) {
-    
-  }
+  constructor(
+    private readonly _httpClient: HttpClient,
+    @Inject(API_URL) private readonly _apiUrl: string
+  ) { }
 
   getBlogs(): Observable<AdminBlog[]> {
-    return this._httpClient.get<AdminBlog[]>(`${environment.apiUrl}/admin/blogs`);
+    return this._httpClient.get<AdminBlog[]>(`${this._apiUrl}/admin/blogs`);
   }
 
   getBlogById(blogId: string): Observable<AdminBlog> {
-    return this._httpClient.get<AdminBlog>(`${environment.apiUrl}/admin/blogs/${blogId}`);
+    return this._httpClient.get<AdminBlog>(`${this._apiUrl}/admin/blogs/${blogId}`);
   }
 
   newBlog(): Observable<string> {
-    return this._httpClient.post(`${environment.apiUrl}/admin/blogs`, {}) as Observable<string>;
+    return this._httpClient.post(`${this._apiUrl}/admin/blogs`, {}) as Observable<string>;
   }
 
   patchBlog(id: string, body: PatchBlogModel): Observable<unknown> {
-    return this._httpClient.patch(`${environment.apiUrl}/admin/blogs/${id}`, body);
+    return this._httpClient.patch(`${this._apiUrl}/admin/blogs/${id}`, body);
   }
 
   deleteBlog(id: string): Observable<unknown> {
-    return this._httpClient.delete(`${environment.apiUrl}/admin/blogs/${id}`);
+    return this._httpClient.delete(`${this._apiUrl}/admin/blogs/${id}`);
   }
 
   getCategories(): Observable<Category[]> {
-    return this._httpClient.get<Category[]>(`${environment.apiUrl}/admin/categories`);
+    return this._httpClient.get<Category[]>(`${this._apiUrl}/admin/categories`);
   }
 
   createCategory(categoryName: string): Observable<unknown> {
-    return this._httpClient.post(`${environment.apiUrl}/admin/categories`, { categoryName });
+    return this._httpClient.post(`${this._apiUrl}/admin/categories`, { categoryName });
   }
 }
