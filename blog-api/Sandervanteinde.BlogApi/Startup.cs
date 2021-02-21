@@ -83,8 +83,6 @@ namespace Sandervanteinde.BlogApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sandervanteinde.BlogApi v1"));
             }
 
-            app.UseHttpsRedirection();
-
             app.UseCors(builder => builder
                 .AllowAnyHeader()
                 .AllowAnyOrigin()
