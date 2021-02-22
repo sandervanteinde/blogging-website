@@ -7,4 +7,5 @@ COPY . /app
 RUN npm run build
 
 FROM nginx:latest
+COPY ./docker/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build-step /app/dist/blog-website /usr/share/nginx/html

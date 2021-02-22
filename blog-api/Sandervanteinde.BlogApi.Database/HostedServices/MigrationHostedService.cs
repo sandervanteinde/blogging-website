@@ -1,8 +1,8 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Npgsql;
 using Polly;
 using System;
 using System.Threading;
@@ -23,7 +23,7 @@ namespace Sandervanteinde.BlogApi.Database.HostedServices
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            return Policy.Handle<SqlException>()
+            return Policy.Handle<NpgsqlException>()
                 .WaitAndRetryAsync(10, i => TimeSpan.FromSeconds(5), (ex, timeSpan) =>
                 {
                     logger.LogWarning($"Failed to connect to database. Trying again after {timeSpan.TotalSeconds} seconds");
@@ -36,6 +36,10 @@ namespace Sandervanteinde.BlogApi.Database.HostedServices
             using var scope = serviceProvider.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<BlogContext>();
             await context.Database.MigrateAsync(cancellationToken);
+
+            using var connection = (NpgsqlConnection)context.Database.GetDbConnection();
+            connection.Open();
+            connection.ReloadTypes();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

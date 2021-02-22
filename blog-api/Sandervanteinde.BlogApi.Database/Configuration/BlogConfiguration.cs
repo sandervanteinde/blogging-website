@@ -31,8 +31,6 @@ namespace Sandervanteinde.BlogApi.Database.Configuration
                 .IsRequired();
 
             builder.Property(e => e.Status)
-                .HasConversion<string>()
-                .HasMaxLength(20)
                 .IsRequired();
 
             builder.HasIndex(e => e.Status);

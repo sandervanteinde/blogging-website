@@ -6,8 +6,19 @@
 - Node
 
 ## Running the application
+There are two ways of running the application.
+
+### Running the website
+The first is simple but does not allow watching the code and viewing your code change live:
+1. Open your shell of preference in the `blog-website` directory.
+1. Run `npm run start:all`
+
+### Running in dev-mode
+You can also run the website in devmode. This allows you to make changes in code and everything updates live.
+
 1. In the `blog-website` directory you can find a package.json file with all the required scripts.
 1. Run `npm i(nstall)`
-1. Run `npm run start`
-1. Run `npm run start:api`
-1. Run `npm run start:docker`
+1. Run these commands in seperate shells:
+  - Run `npm run start`
+  - Run `npm run start:api`
+  - Run `npm run start:docker`

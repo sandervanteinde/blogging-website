@@ -8,7 +8,7 @@ namespace Sandervanteinde.BlogApi.Database
         public BlogContext CreateDbContext(string[] args)
         {
             var opts = new DbContextOptionsBuilder<BlogContext>();
-            opts.UseSqlServer();
+            opts.UseNpgsql();
             return new BlogContext(opts.Options);
         }
     }
