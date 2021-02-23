@@ -1,3 +1,4 @@
+# The database docker-compose file
 services:
   database:
     image: postgres

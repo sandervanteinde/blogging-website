@@ -1,0 +1,13 @@
+# Production variant of the reverse proxy. Uses https
+version: '3'
+
+services:
+  reverse-proxy-https:
+    build: ../reverse-proxy/https
+    image: sandervanteinde/reverse-proxy
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - api
+      - web

@@ -1,0 +1,13 @@
+# Docker compose for local development proxy. Just used for easily starting the solution in one go.
+# Production environment use https.
+version: '3'
+
+services:
+  reverse-proxy-http:
+    build: ../reverse-proxy/http
+    image: sandervanteinde/reverse-proxy-http
+    ports:
+      - 80:80
+    depends_on:
+      - api
+      - web

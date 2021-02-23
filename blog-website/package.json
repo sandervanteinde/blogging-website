@@ -2,15 +2,7 @@
   "name": "blog-website",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "start:api": "cd ../blog-api/Sandervanteinde.BlogApi && dotnet watch run",
-    "start:docker": "cd ../tools && docker-compose up",
-    "start:all": "cd ../tools && docker-compose -f docker-compose.yml -f docker-compose.all.yml up",
-    "build": "ng build --prod",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "start": "ng serve"
   },
   "private": true,
   "dependencies": {
