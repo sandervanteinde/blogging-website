@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sandervanteinde.BlogApi.Authorization;
 using Sandervanteinde.BlogApi.Messages.Commands;
@@ -14,8 +13,7 @@ using System.Threading.Tasks;
 namespace Sandervanteinde.BlogApi.Controllers
 {
     [Route("api/admin/blogs")]
-    [Authorize]
-    [AdminAuthorize]
+    [PermissionAuthorize("Blogs")]
     public class AdminBlogsController : ControllerBase
     {
         private readonly IMediator mediator;

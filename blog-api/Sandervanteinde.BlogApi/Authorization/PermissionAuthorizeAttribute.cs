@@ -4,16 +4,25 @@ using System.Linq;
 
 namespace Sandervanteinde.BlogApi.Authorization
 {
-    internal sealed class AdminAuthorizeAttribute : TypeFilterAttribute
+    internal sealed class PermissionAuthorizeAttribute : TypeFilterAttribute
     {
-        public AdminAuthorizeAttribute()
+        public string Permission { get; }
+        public PermissionAuthorizeAttribute(string permission)
             : base(typeof(Filter))
         {
-
+            Permission = permission;
+            Arguments = new object[] { this };
         }
+
 
         private class Filter : IAuthorizationFilter
         {
+            private readonly PermissionAuthorizeAttribute attribute;
+
+            public Filter(PermissionAuthorizeAttribute attribute)
+            {
+                this.attribute = attribute;
+            }
             public void OnAuthorization(AuthorizationFilterContext context)
             {
                 if(context.HttpContext.User.Identity?.IsAuthenticated != true)
@@ -22,7 +31,7 @@ namespace Sandervanteinde.BlogApi.Authorization
                     return;
                 }
                 var user = context.HttpContext.User;
-                if (user.Claims.Any(c => c is { Type: "permissions", Value: "Blogs" }))
+                if (user.Claims.Any(c => c.Type == "permissions" && c.Value == attribute.Permission))
                 {
                     return;
                 }

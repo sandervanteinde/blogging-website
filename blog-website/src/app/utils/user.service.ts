@@ -3,11 +3,11 @@ import { AuthService } from '@auth0/auth0-angular';
 import { Observable } from 'rxjs';
 import { filter, map, pluck } from 'rxjs/operators';
 
-const roleClaimId = 'https://sandervanteinde.nl/roles';
-const roles = ['Blog Admin'] as const;
-export type Role = typeof roles[number];
+const permissionId = 'https://sandervanteinde.nl/permissions';
+const roles = ['Blogs', 'Images'] as const;
+export type Permission = typeof roles[number];
 interface IdTokenClaims {
-  [roleClaimId]: Array<Role>
+  [permissionId]: Array<Permission>
 }
 
 @Injectable({
@@ -16,9 +16,9 @@ interface IdTokenClaims {
 export class UserService {
   private readonly _claims = this._auth.idTokenClaims$.pipe(filter(Boolean)) as Observable<IdTokenClaims>;
   readonly hasAccessToBlogs$ = this._claims.pipe(
-    map(roles => roles[roleClaimId].includes('Blog Admin'))
+    map(roles => roles[permissionId].includes('Blogs'))
   )
 
-  readonly roles$ = this._claims.pipe(pluck(roleClaimId));
+  readonly permissions = this._claims.pipe(pluck(permissionId));
   constructor(private readonly _auth: AuthService) { }
 }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sandervanteinde.BlogApi.Messages.Models;
 using Sandervanteinde.BlogApi.Messages.Queries;
@@ -21,6 +22,7 @@ namespace Sandervanteinde.BlogApi.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IReadOnlyList<BlogListItem>>> GetBlogsAsync([FromQuery] NullableBlogQuery query, CancellationToken cancellationToken)
         {
             var result = await mediator.Send(query.ToQuery(), cancellationToken);
@@ -28,6 +30,7 @@ namespace Sandervanteinde.BlogApi.Controllers
         }
 
         [HttpGet("{blogTitle}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Blog>> GetBlogByTitle(string blogTitle, CancellationToken cancellationToken)
         {
             var blog = await mediator.Send(new BlogByTitleQuery(blogTitle), cancellationToken);

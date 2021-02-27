@@ -12,8 +12,7 @@ using System.Threading.Tasks;
 namespace Sandervanteinde.BlogApi.Controllers
 {
     [Route("api/admin/categories")]
-    [Authorize]
-    [AdminAuthorize]
+    [PermissionAuthorize("Blogs")]
     public class CategoryController : ControllerBase
     {
         private readonly IMediator mediator;

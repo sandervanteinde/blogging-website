@@ -28,7 +28,7 @@ import { AuthModule } from '@auth0/auth0-angular';
     AuthModule.forRoot({
       domain: 'sandervanteinde.eu.auth0.com',
       clientId: 'WAoql2uEvCXtkzlArCE1R9OcFwQYGqzA',
-      audience: "https://www.sandervanteinde.nl/api",
+      audience: "https://sandervanteinde.nl",
       scope: 'Blogs',
       httpInterceptor: {
         allowedList: [

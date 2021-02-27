@@ -31,7 +31,8 @@ namespace Sandervanteinde.BlogApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers()
-                .AddJsonOptions(opts => {
+                .AddJsonOptions(opts =>
+                {
                     opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
                 });
             services.AddCors();
@@ -95,7 +96,8 @@ namespace Sandervanteinde.BlogApi
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers()
+                    .RequireAuthorization();
             });
         }
     }
