@@ -6,12 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Sandervanteinde.BlogApi.Configuration;
 using Sandervanteinde.BlogApi.Database;
 using Sandervanteinde.BlogApi.Infrastructure;
 using Sandervanteinde.BlogApi.Messages;
 using Swashbuckle.AspNetCore.Filters;
-using System.Text;
+using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -35,7 +34,6 @@ namespace Sandervanteinde.BlogApi
                 .AddJsonOptions(opts => {
                     opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
                 });
-            services.Configure<BlogConfiguration>(Configuration);
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
@@ -50,23 +48,22 @@ namespace Sandervanteinde.BlogApi
 
                 c.OperationFilter<SecurityRequirementsOperationFilter>();
             });
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                var domain = $"https://{Configuration["Auth0:Domain"]}/";
+                options.Audience = Configuration["Auth0:Audience"];
+                options.Authority = Configuration["Auth0:Authority"];
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    var issuer = Configuration["Jwt:Issuer"];
-                    var key = Configuration["Jwt:Key"];
-                    options.RequireHttpsMetadata = true;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = issuer,
-                        ValidAudience = issuer,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
-                    };
-                });
+                    NameClaimType = ClaimTypes.NameIdentifier,
+                    ValidateIssuerSigningKey = true
+                };
+            });
 
             services.AddDatabaseServices(Configuration.GetConnectionString("BlogContext"), Environment.IsDevelopment());
             services.AddMessaging();

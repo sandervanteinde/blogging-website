@@ -3,13 +3,19 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthorizedGuard } from './authorized.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditBlogComponent } from './edit-blog/edit-blog.component';
-import { LoginComponent } from './login/login.component';
+import { RoleGuard } from './role.guard';
 
 
 const routes: Routes = [
   {
     path: '',
-    canActivate: [AuthorizedGuard],
+    canActivate: [
+      AuthorizedGuard,
+      RoleGuard
+    ],
+    data: {
+      roles: 'Blog Admin'
+    },
     children: [
       {
         path: '',
@@ -20,10 +26,6 @@ const routes: Routes = [
         component: EditBlogComponent
       }
     ]
-  },
-  {
-    path: 'login',
-    component: LoginComponent
   }
 ];
 

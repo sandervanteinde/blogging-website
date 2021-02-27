@@ -1,8 +1,8 @@
-import { Directive, Host, Optional, SkipSelf } from '@angular/core';
+import { Directive, Host } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { catchError, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
-import { componentIsTitledComponent, TitledComponent } from '../titled-component';
+import { catchError, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { componentIsTitledComponent } from '../titled-component';
 import { UntilDestroyed } from '../until-destroyed';
 import { TitleRegistryService } from './title-registry.service';
 

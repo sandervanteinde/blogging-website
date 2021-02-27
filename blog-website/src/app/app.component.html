@@ -44,6 +44,16 @@
               Admin panel
             </a>
           </li>
+          <li *ngIf="isLoggedIn$ | async">
+            <a
+              href="#"
+              (click)="logout()"
+              class="nav-container__link"
+              routerLinkActive="nav-container__link--active"
+            >
+              Logout
+            </a>
+          </li>
         </ul>
       </div>
       <div class="nav-container__right">

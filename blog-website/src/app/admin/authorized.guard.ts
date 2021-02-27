@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { LoginService } from './login.service';
+import { CanActivate } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
+import { Observable } from 'rxjs';
+import { first, map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthorizedGuard implements CanActivate {
-  constructor(private readonly _loginService: LoginService, private readonly _router: Router) {
+  constructor(private readonly _auth: AuthService) {
 
   }
-  canActivate(route: ActivatedRouteSnapshot): boolean | UrlTree {
-    if(!this._loginService.isLoggedIn) {
-      this._loginService.setReturnRoute(route);
-      return this._router.parseUrl('/admin/login');
-    }
-    return true;
+  canActivate(): Observable<boolean> {
+    return this._auth.isAuthenticated$.pipe(
+      first(),
+      map(isAuthenticated => {
+        if(isAuthenticated) return true;
+        this._auth.loginWithRedirect({scope: 'Blogs'});
+        return false;
+      })
+    )
   }
   
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using Sandervanteinde.BlogApi.Database.Configuration;
 using Sandervanteinde.BlogApi.Database.Entities;
 
 namespace Sandervanteinde.BlogApi.Database

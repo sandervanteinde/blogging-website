@@ -11,6 +11,7 @@ import { MarkdownOptions } from './utils/markdown-options';
 import { TitlesModule } from './utils/titles/titles.module';
 import { EnvironmentService } from './environment.service';
 import { API_URL } from './utils/api-url';
+import { AuthModule } from '@auth0/auth0-angular';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,20 @@ import { API_URL } from './utils/api-url';
     MarkdownModule.forRoot(),
     HttpClientModule,
     HomeModule,
-    TitlesModule
+    TitlesModule,
+    AuthModule.forRoot({
+      domain: 'sandervanteinde.eu.auth0.com',
+      clientId: 'WAoql2uEvCXtkzlArCE1R9OcFwQYGqzA',
+      audience: "https://www.sandervanteinde.nl/api",
+      scope: 'Blogs',
+      httpInterceptor: {
+        allowedList: [
+          {
+            uri: '*'
+          }
+        ]
+      }
+    })
   ],
   providers: [
     {

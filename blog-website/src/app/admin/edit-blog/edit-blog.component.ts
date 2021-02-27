@@ -1,10 +1,9 @@
-import { ThrowStmt } from '@angular/compiler';
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder } from '@ngneat/reactive-forms';
-import { BehaviorSubject, combineLatest, Observable, of, Subscription, throwError } from 'rxjs';
-import { debounceTime, filter, map, skip, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, Subscription, throwError } from 'rxjs';
+import { debounceTime, map, skip, switchMap, tap } from 'rxjs/operators';
 import { UntilDestroyed } from 'src/app/utils/until-destroyed';
 import { AdminService } from '../admin.service';
 import { Category } from '../models/category';

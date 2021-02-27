@@ -1,7 +1,7 @@
 {
   "name": "blog-website-sln",
   "scripts": {
-    "start:all": "cd ./tools && docker-compose -f docker-compose.yml -f docker-compose.all.yml -f docker-compose.http.yml up -d",
+    "start:all": "cd ./tools && docker-compose -f docker-compose.yml -f docker-compose.all.yml -f docker-compose.http.yml up --build -d",
     "start:api": "cd ./blog-api/Sandervanteinde.BlogApi && dotnet watch run",
     "start:database": "cd ./tools && docker-compose up",
     "start:web": "cd ./blog-website && npm run start",

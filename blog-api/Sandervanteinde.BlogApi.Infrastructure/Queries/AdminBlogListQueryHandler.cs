@@ -4,10 +4,8 @@ using Sandervanteinde.BlogApi.Database;
 using Sandervanteinde.BlogApi.Infrastructure.MappingExtensions;
 using Sandervanteinde.BlogApi.Messages.Models;
 using Sandervanteinde.BlogApi.Messages.Queries;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

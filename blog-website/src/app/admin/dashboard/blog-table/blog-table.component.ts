@@ -1,7 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { TableColumn } from '@swimlane/ngx-datatable';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { BehaviorSubject, ErrorObserver, NextObserver } from 'rxjs';
-import { map, shareReplay, switchMap } from 'rxjs/operators';
+import { shareReplay, switchMap } from 'rxjs/operators';
 import { AdminService } from '../../admin.service';
 import { AdminBlog } from '../../models/admin-blog';
 
