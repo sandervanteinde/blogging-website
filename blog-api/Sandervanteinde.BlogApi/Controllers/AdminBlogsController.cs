@@ -48,21 +48,37 @@ namespace Sandervanteinde.BlogApi.Controllers
         }
 
         [HttpPatch("{blogId:guid}")]
-        public async Task<IActionResult> PatchBlog([FromRoute] Guid blogId, [FromBody] PatchBlogModel body, CancellationToken cancellationToken)
+        public async Task<IActionResult> PatchBlog(
+            [FromRoute] Guid blogId,
+            [FromBody] PatchBlogModel body,
+            CancellationToken cancellationToken
+        )
         {
-            if(body.NewStatus.HasValue)
+            if (body.NewStatus is not null)
             {
                 var updateStatusCommand = new UpdateBlogStatusCommand(blogId, body.NewStatus.Value);
                 await mediator.Send(updateStatusCommand, cancellationToken);
             }
 
-            if(body.NewBlogContents is not null)
+            if (body.NewBlogContents is not null)
             {
                 var command = body.NewBlogContents.ToCommand(blogId);
                 await mediator.Send(command, cancellationToken);
             }
 
             return NoContent();
+        }
+
+        [HttpPut("{blogId:guid}/logo")]
+        public async Task<ActionResult<LogoUploadResult>> UpdateBlogLogo(
+            [FromRoute] Guid blogId,
+            [FromForm] NewBlogLogo newLogo,
+            CancellationToken cancellationToken
+        )
+        {
+            var updateLogoCommand = newLogo.ToCommand(blogId);
+            var newUri = await mediator.Send(updateLogoCommand, cancellationToken);
+            return new LogoUploadResult(newUri);
         }
 
         [HttpDelete("{blogId:guid}")]
@@ -72,5 +88,7 @@ namespace Sandervanteinde.BlogApi.Controllers
             await mediator.Send(deleteBlogCommand, cancellationToken);
             return NoContent();
         }
+
+        public record LogoUploadResult(string NewLogoUrl);
     }
 }

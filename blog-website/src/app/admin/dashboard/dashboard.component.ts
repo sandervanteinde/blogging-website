@@ -15,6 +15,6 @@ export class DashboardComponent {
   newBlog(): void {
     this._adminService.newBlog().subscribe(newId => {
       this._router.navigate(['/admin', newId, 'edit']);
-    })
+    });
   }
 }

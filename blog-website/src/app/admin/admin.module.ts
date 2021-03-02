@@ -11,6 +11,7 @@ import { AdminService } from './admin.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminDashboardModule } from './dashboard/admin-dashboard.module';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
+import { ImageUploadModule } from '../utils/image-upload/image-upload.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
     LayoutModule,
     MarkdownModule,
     HttpClientModule,
-    AdminDashboardModule
+    AdminDashboardModule,
+    ImageUploadModule
   ],
   declarations: [
     EditBlogComponent

@@ -1,35 +1,40 @@
 <h1>Update blog post</h1>
 
-
-<form [formGroup]="blogForm" class="new-blog__editor" (ngSubmit)="updateBlog()">
-  <input class="new-blog__title-input" formControlName="title" type="text" placeholder="Title" />
-  <span class="new-blog__status new-blog__status--{{state}}">{{state}}</span>
-  <textarea class="new-blog__subtitle-input" formControlName="shortDescription"></textarea>
-  <textarea class="new-blog__content-input" formControlName="markdownContent"></textarea>
-  <div class="new-blog__preview">
-    <h1>{{ blogForm.value.title }}</h1>
-    <img [src]="blogForm.value.logoUrl">
-    <markdown emoji [lineNumbers]="true" [data]="blogForm.value.markdownContent"></markdown>
+<form [formGroup]="blogForm" (ngSubmit)="updateBlog()">
+  <button class="new-blog__save" app-button [disabled]="blogForm.invalid"> Save blog </button>
+  <div class="new-blog__editor">
+    <input class="new-blog__title-input" formControlName="title" type="text" placeholder="Title" />
+    <span class="new-blog__status new-blog__status--{{state}}">{{state}}</span>
+    <textarea class="new-blog__subtitle-input" formControlName="shortDescription"></textarea>
+    <textarea class="new-blog__content-input" formControlName="markdownContent"></textarea>
+    <div class="new-blog__preview">
+      <h1>{{ blogForm.value.title }}</h1>
+      <img [src]="blogLogo$ | async">
+      <markdown emoji [lineNumbers]="true" [data]="blogForm.value.markdownContent"></markdown>
+    </div>
+    <div class="new-blog__categories">
+      <div class="new-blog__assigned-categories">
+        <h3>Assigned categories</h3>
+        <app-button-group>
+          <button app-button *ngFor="let category of blogForm.value.categories" (click)="removeCategory(category)">{{category.name}}</button>
+        </app-button-group>
+      </div>
+      <div class="new-blog__available-categories">
+        <h3>Available categories</h3>
+        <app-button-group>
+          <button app-button *ngFor="let category of availableCategories$ | async" (click)="addCategory(category)">{{category.name}}</button>
+          <button (click)="addingCategory = true" app-button *ngIf="!addingCategory; else addCategoryForm"> + New category</button>
+        </app-button-group>
+        <ng-template #addCategoryForm>
+          <form [formGroup]="newCategory" (ngSubmit)="createCategory()">
+            <input formControlName="name">
+          </form>
+        </ng-template>
+      </div>
+    </div>
   </div>
-  <div class="new-blog__assigned-categories">
-    <h3>Assigned categories</h3>
-    <app-button-group>
-      <button app-button *ngFor="let category of blogForm.value.categories" (click)="removeCategory(category)">{{category.name}}</button>
-    </app-button-group>
-  </div>
-  <div class="new-blog__available-categories">
-    <h3>Available categories</h3>
-    <app-button-group>
-      <button app-button *ngFor="let category of availableCategories$ | async" (click)="addCategory(category)">{{category.name}}</button>
-      <button (click)="addingCategory = true" app-button *ngIf="!addingCategory; else addCategoryForm"> + New category</button>
-    </app-button-group>
-    <ng-template #addCategoryForm>
-      <form [formGroup]="newCategory" (ngSubmit)="createCategory()">
-        <input formControlName="name">
-      </form>
-    </ng-template>
-  </div>
-  <div></div>
+  <app-image-upload formControlName="logo"></app-image-upload>
+  <br>
   <button class="new-blog__save" app-button [disabled]="blogForm.invalid"> Save blog </button>
 </form>
 

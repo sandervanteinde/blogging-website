@@ -9,7 +9,6 @@ using Microsoft.OpenApi.Models;
 using Sandervanteinde.BlogApi.Database;
 using Sandervanteinde.BlogApi.Infrastructure;
 using Sandervanteinde.BlogApi.Messages;
-using Swashbuckle.AspNetCore.Filters;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -39,15 +38,6 @@ namespace Sandervanteinde.BlogApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sandervanteinde.BlogApi", Version = "v1" });
-                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-                {
-                    Description = "Bearer token",
-                    In = ParameterLocation.Header,
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey
-                });
-
-                c.OperationFilter<SecurityRequirementsOperationFilter>();
             });
             services.AddAuthentication(options =>
             {
@@ -68,7 +58,7 @@ namespace Sandervanteinde.BlogApi
 
             services.AddDatabaseServices(Configuration.GetConnectionString("BlogContext"), Environment.IsDevelopment());
             services.AddMessaging();
-            services.AddInfrastructure();
+            services.AddInfrastructure(Configuration["ImageService:Url"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

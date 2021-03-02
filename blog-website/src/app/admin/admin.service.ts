@@ -8,7 +8,7 @@ import { Category } from './models/category';
 interface PatchBlogModel {
   newStatus?: AdminBlog['status'];
   newBlogContents?: {
-    logoUrl: string;
+    logoUrl?: string;
     markdownContent: string;
     shortDescription: string;
     title: string;
@@ -33,6 +33,12 @@ export class AdminService {
 
   newBlog(): Observable<string> {
     return this._httpClient.post(`${this._apiUrl}/admin/blogs`, {}) as Observable<string>;
+  }
+
+  uploadLogo(id: string, file: File): Observable<{newLogoUrl: string}> {
+    const formData = new FormData();
+    formData.append('logo', file, file.name);
+    return this._httpClient.put<{newLogoUrl: string}>(`${this._apiUrl}/admin/blogs/${id}/logo`, formData);
   }
 
   patchBlog(id: string, body: PatchBlogModel): Observable<unknown> {

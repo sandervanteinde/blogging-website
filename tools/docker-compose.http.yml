@@ -3,11 +3,13 @@
 version: '3'
 
 services:
-  reverse-proxy-http:
-    build: ../reverse-proxy/http
-    image: sandervanteinde/reverse-proxy-http
+  nginx-proxy:
+    image: jwilder/nginx-proxy
     ports:
-      - 80:80
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
     depends_on:
       - api
       - web
+      - images

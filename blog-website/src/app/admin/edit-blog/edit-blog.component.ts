@@ -3,7 +3,8 @@ import { Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder } from '@ngneat/reactive-forms';
 import { BehaviorSubject, combineLatest, Observable, Subscription, throwError } from 'rxjs';
-import { debounceTime, map, skip, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, pluck, skip, switchMap, tap } from 'rxjs/operators';
+import { ImageRenderingService } from 'src/app/utils/image-upload/image-rendering.service';
 import { UntilDestroyed } from 'src/app/utils/until-destroyed';
 import { AdminService } from '../admin.service';
 import { Category } from '../models/category';
@@ -13,8 +14,8 @@ export interface BlogForm {
   title: string;
   markdownContent: string;
   shortDescription: string;
-  logoUrl: string;
   categories: Array<Category>;
+  logo: string | File | null;
 }
 @Component({
   templateUrl: './edit-blog.component.html',
@@ -36,9 +37,16 @@ export class EditBlogComponent extends UntilDestroyed implements OnInit {
     title: this._formBuilder.control('', [Validators.required, Validators.maxLength(200)]),
     markdownContent: this._formBuilder.control('', [Validators.required]),
     shortDescription: this._formBuilder.control('', [Validators.required, Validators.maxLength(1000)]),
-    logoUrl: this._formBuilder.control('', [Validators.required, Validators.maxLength(200)]),
-    categories: this._formBuilder.array([])
+    categories: this._formBuilder.array([]),
+    logo: this._formBuilder.control(null)
   });
+
+  readonly blogLogo$ = this._imageRendering.createImageSourceStream(
+    this.blogForm.value$.pipe(
+      pluck('logo'),
+      distinctUntilChanged()
+    )
+  );
 
   readonly availableCategories$ = combineLatest([
     this.blogForm.value$.pipe(map(value => value.categories)),
@@ -55,7 +63,8 @@ export class EditBlogComponent extends UntilDestroyed implements OnInit {
     private readonly _formBuilder: FormBuilder,
     private readonly _adminService: AdminService,
     private readonly _router: Router,
-    private readonly _activatedRoute: ActivatedRoute
+    private readonly _activatedRoute: ActivatedRoute,
+    private readonly _imageRendering: ImageRenderingService
   ) {
     super();
   }
@@ -73,10 +82,10 @@ export class EditBlogComponent extends UntilDestroyed implements OnInit {
       this.state = 'pristine';
       this.blogForm.reset({
         id: newBlog.id,
-        logoUrl: newBlog.logoUrl,
         markdownContent: newBlog.markdownContent,
         shortDescription: newBlog.shortDescription,
-        title: newBlog.title
+        title: newBlog.title,
+        logo: newBlog.logoUrl
       });
 
       const categories = this.blogForm.getControl('categories') as FormArray<Category>;
@@ -89,7 +98,13 @@ export class EditBlogComponent extends UntilDestroyed implements OnInit {
         debounceTime(1000),
         tap(() => this.state = 'saving'),
         switchMap(() => this.doSave())
-      ).subscribe(() => this.state = 'saved');
+      ).subscribe({
+        next: () => this.state = 'saved',
+        error: err => {
+          console.error(err);
+          this.state = 'dirty';
+        }
+      })
     });
   }
 
@@ -124,7 +139,18 @@ export class EditBlogComponent extends UntilDestroyed implements OnInit {
   }
 
   private doSave(): Observable<unknown> {
-    const { id, markdownContent, title, logoUrl, shortDescription, categories } = this.blogForm.value;
-    return this._adminService.patchBlog(id, { newBlogContents: {logoUrl, title, markdownContent, shortDescription, categoryIds: categories.map(c => c.id) } });
+    const { id, markdownContent, title, shortDescription, categories, logo } = this.blogForm.value;
+    const saveForm = (logoUrl: string | undefined) => this._adminService.patchBlog(id, { newBlogContents: { logoUrl, title, markdownContent, shortDescription, categoryIds: categories.map(c => c.id) } });
+    if (logo instanceof File) {
+      return this._adminService.uploadLogo(id, logo).pipe(
+        tap(response => {
+          const logo = this.blogForm.getControl('logo');
+          logo.reset(response.newLogoUrl);
+        }),
+        switchMap(response => saveForm(response.newLogoUrl))
+      );
+    } else {
+      return saveForm(undefined);
+    }
   }
 }

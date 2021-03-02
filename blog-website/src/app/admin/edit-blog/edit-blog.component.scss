@@ -13,6 +13,13 @@ textarea {
     grid-area: subtitle;
   }
 
+  &__categories {
+    grid-area: categories;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
   &__category-list {
     display: inline-block;
     list-style: none;
@@ -44,7 +51,11 @@ textarea {
     height: 100%;
     display: grid;
     gap: 30px;
-    grid-template-areas: "title title status" "subtitle subtitle subtitle" "editor preview preview";
+    grid-template-areas: 
+      "title title status" 
+      "subtitle subtitle subtitle"
+      "editor preview preview"
+      "categories categories categories";
     grid-template-columns: 50% 40% 10%;
   }
 
@@ -55,4 +66,9 @@ textarea {
   &__preview {
     grid-area: preview;
   }
+}
+
+img {
+  max-width: 100%;
+  max-height: var(--logo-max-height);
 }

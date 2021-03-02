@@ -20,7 +20,7 @@ namespace Sandervanteinde.BlogApi.Infrastructure.Commands
 
         public async Task<Unit> Handle(UpdateBlogContentsCommand request, CancellationToken cancellationToken)
         {
-            request.Deconstruct(out var id, out var logoUrl, out var markdownContent, out var shortDescription, out var title, out var categoryIds);
+            request.Deconstruct(out var id, out var markdownContent, out var shortDescription, out var title, out var categoryIds);
 
             var blog = await context.Blogs
                 .Include(b => b.Categories)
@@ -38,8 +38,6 @@ namespace Sandervanteinde.BlogApi.Infrastructure.Commands
             var categories = await context.BlogCategories
                 .Where(category => categoryIds.Contains(category.Id))
                 .ToListAsync(cancellationToken);
-
-            blog.LogoUrl = logoUrl;
             blog.MarkdownContent = markdownContent;
             blog.ShortDescription = shortDescription;
             blog.Title = title;

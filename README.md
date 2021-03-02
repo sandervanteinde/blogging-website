@@ -22,3 +22,5 @@ You can also run the website in devmode. This allows you to make changes in code
   - Run `npm run start:web`
   - Run `npm run start:api`
   - Run `npm run start:database`
+  - Run `npm run start:images`
+

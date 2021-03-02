@@ -9,13 +9,13 @@
   img {
     flex-shrink: 0;
     flex-grow: 0;
+    max-height: var(--logo-max-height);
   }
 }
 
 article {
   margin-top: -26px;
 }
-
 
 app-card {
   height: 100%;

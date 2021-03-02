@@ -7,7 +7,30 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - sqlserver:/sqlserver
+      - postgres:/var/lib/postgresql/data
+
+  images:
+    build: ../images
+    image: sandervanteinde/images
+    environment:
+      HostSettings__ExternalUrl: http://images.localhost/images/
+      HostSettings__ImagePath: /app/wwwroot/images
+      VIRTUAL_HOST: images-upload.localhost
+    volumes:
+      - images:/app/wwwroot
+
+
+  image-host:
+    build: ../image-host
+    image: sandervanteinde/image-host
+    volumes:
+      - images:/home/file-host
+    environment:
+      VIRTUAL_HOST: images.localhost
+    depends_on:
+      - images
 volumes:
-  sqlserver:
+  postgres:
+    driver: local
+  images:
     driver: local

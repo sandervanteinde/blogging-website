@@ -1,0 +1,10 @@
+<ng-container [ngSwitch]="valueType$ | async">
+  <ng-template ngSwitchDefault>
+    <p>Currently uploaded:</p>
+    <p>{{fileName$ | async}}</p>
+  </ng-template>
+  <ng-template ngSwitchCase="empty">
+    <input (input)="onFileInput($event)" type="file" accept="image/*">
+  </ng-template>
+</ng-container>
+<button *ngIf="(valueType$ | async) !== 'empty'" app-button (click)="removeLogo()">Remove logo</button>

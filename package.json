@@ -4,8 +4,9 @@
     "start:all": "cd ./tools && docker-compose -f docker-compose.yml -f docker-compose.all.yml -f docker-compose.http.yml up --build -d",
     "start:api": "cd ./blog-api/Sandervanteinde.BlogApi && dotnet watch run",
     "start:database": "cd ./tools && docker-compose up",
+    "start:images": "cd ./images/Sandervanteinde.Images && dotnet watch run",
     "start:web": "cd ./blog-website && npm run start",
-    "stop": "cd ./tools && docker-compose -f docker-compose.yml -f docker-compose.all.yml -f docker-compose.http.yml -f docker-compose.https.yml down",
-    "deploy": "cd ./tools && docker-compose -f docker-compose.yml -f docker-compose.all.yml -f docker-compose.https.yml build && docker-compose -f docker-compose.yml -f docker-compose.all.yml -f docker-compose.https.yml push"
+    "stop": "cd ./tools && docker-compose -f docker-compose.yml -f docker-compose.all.yml -f docker-compose.http.yml down",
+    "deploy": "cd ./tools && docker-compose -f docker-compose.yml -f docker-compose.all.yml build && docker-compose -f docker-compose.yml -f docker-compose.all.yml push"
   }
 }
